@@ -45,3 +45,19 @@ Neo ist eine React-Native-/Expo-App, die Schwangerschaftsbegleitung und Foto-Med
 - **MVP-Scope respektieren:** Keine Features aus V1.1 oder später vorziehen (siehe `PROJECT_CONTEXT.md` Abschnitt 4).
 - **Bei Dateiänderungen:** erst Plan zeigen, dann umsetzen.
 - **Git-Commits:** nur auf ausdrückliche Anweisung erstellen.
+
+## Ordnerstruktur-Konventionen
+
+- Datenbank-Migrationen liegen ausschließlich unter supabase/migrations/
+- Migrationen sind durchnummeriert: 0001_initial_schema.sql, 0002_*.sql, ...
+- Bestehende Migrationsdateien werden nie bearbeitet, nur neue angelegt
+- Der aktuelle Stand des Schemas ergibt sich aus der Reihenfolge aller Migrationen
+
+## Sprach-Konventionen
+
+- Alle technischen Bezeichner (Tabellennamen, Spaltennamen, Variablennamen,
+  Funktionsnamen, Enum-Werte, Konstanten) sind auf Englisch
+- Alle Inhalte, die Endnutzer in der App sehen (UI-Texte, Fehlermeldungen,
+  Push-Benachrichtigungen, E-Mail-Vorlagen), sind ausschließlich auf Deutsch
+- Übersetzungen von Enum-Werten (z.B. visibility=private → "Nur ich")
+  passieren ausschließlich im UI-Layer, nicht in der Datenbank

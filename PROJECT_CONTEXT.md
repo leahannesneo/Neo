@@ -4,7 +4,8 @@
 > Sie wird zu Beginn jedes neuen Chats mit Claude reinkopiert und liegt
 > zusätzlich im Projektordner, damit Claude Code sie lesen kann.
 >
-> **Stand:** Projektstart, vor Schritt 0 (Setup)
+> **Stand:** Etappe 1 (Datenbank-Schema) abgeschlossen — bereit für Etappe 2 (Authentifizierung)
+> **Letztes Update:** 2026-04-17
 > **Architekt:** Hannes
 > **Technische Umsetzung:** Claude (Planung) + Claude Code (Ausführung)
 
@@ -67,6 +68,18 @@ durchgängige Begleitung aus einer Hand.
 - lib/supabase.js angelegt (Client-Initialisierung)
 - App.js mit Supabase-Verbindungstest erweitert
 - Live-Test erfolgreich: "✅ Supabase verbunden" auf iPhone via Expo Go bestätigt
+- CLAUDE.md im Projektordner angelegt (Leitfaden für Claude Code)
+- Git-Repo lokal initialisiert
+- GitHub-Repo "Neo" angelegt (privat) und verknüpft
+- GitHub CLI (gh) installiert und authentifiziert
+- Initial commit auf GitHub gepusht
+- Supabase-Datenbank-Schema komplett angelegt (25 Tabellen)
+- Row Level Security auf allen Tabellen aktiv
+- Storage Buckets "photos" und "profile-photos" privat angelegt
+- Auto-Trigger aktiv: legt bei neuer Registrierung automatisch Profile + leere Familie + Settings an
+- System-Seed-Daten eingespielt: ca. 30 Moment-Tags und 18 STIKO-Impfungen
+- SQL-Migration versioniert unter supabase/migrations/0001_initial_schema.sql
+- IDEAS_BACKLOG.md im Projektordner angelegt (sammelt verschobene Ideen, aktuell 6 Einträge)
 
 **Noch offen (kommt später):**
 - Apple Developer Account (erst zur App-Store-Einreichung)
@@ -244,7 +257,7 @@ Etappe 1 beim Anlegen des Schemas konkretisiert.)
 
 ## 7. Bau-Etappen (Roadmap MVP)
 
-**Schritt 0 – Setup** (vor den Etappen)
+**Schritt 0 – Setup** ✅ abgeschlossen
 - Projektordner anlegen
 - Expo-Projekt initialisieren
 - Supabase-Projekt anlegen, Credentials holen
@@ -252,7 +265,7 @@ Etappe 1 beim Anlegen des Schemas konkretisiert.)
 - CLAUDE.md anlegen
 - Erster Test: Leere App auf iPhone via Expo Go
 
-**Etappe 1 – Datenbank-Schema in Supabase**
+**Etappe 1 – Datenbank-Schema in Supabase ✅ abgeschlossen**
 **Etappe 2 – Authentifizierung** (Register, Login, Logout)
 **Etappe 3 – Onboarding-Flow** (adaptive Karten)
 **Etappe 4 – Kind-Profil & Gesundheitsdaten**
@@ -286,6 +299,11 @@ Wenn ein neuer Chat mit dieser Datei gestartet wird, soll Claude:
 6. Bei Unklarheiten Rückfragen stellen, nicht raten
 7. Die MVP-Grenzen respektieren – keine Features aus V1.1 oder
    später vorziehen, außer Hannes entscheidet es bewusst
+8. Konvention: Technische Namen (Tabellen, Felder, Variablen im
+   Code, SQL-Bezeichner) sind auf Englisch. Alle Inhalte, die
+   Userinnen in der App sehen (Texte, Buttons, Benachrichtigungen,
+   Fehlermeldungen, Content), sind ausschließlich auf Deutsch.
+   Übersetzungs-Mapping findet im UI-Layer statt.
 
 ---
 
@@ -374,6 +392,36 @@ Danach geht die Arbeit an der neuen Etappe weiter.
 - Macht den Projektstand jederzeit nachvollziehbar
 - Erlaubt Hannes, sich auf das Testen und Entscheiden zu
   konzentrieren, während der Workflow im Hintergrund läuft
+
+---
+
+## 11. Zusätzliche Projekt-Dateien
+
+Neben dieser PROJECT_CONTEXT.md liegen folgende ergänzende Dateien
+im Projektordner:
+
+### IDEAS_BACKLOG.md
+
+Sammelt alle Ideen, Features und Konzepte, die während der Entwicklung
+aufkommen, aber bewusst nicht im MVP umgesetzt werden. Jede Idee hat
+ein Datum, einen Status und eine Begründung, warum sie vertagt wurde.
+
+Claude liest diese Datei bei Bedarf zusätzlich zur PROJECT_CONTEXT.md,
+insbesondere wenn es um Features nach dem MVP geht oder wenn eine neue
+Idee entsteht, die dorthin verschoben werden sollte.
+
+Regel: Neue Ideen werden sofort beim Entstehen eingetragen, nicht erst
+am Ende einer Etappe. So geht nichts verloren, und diese
+PROJECT_CONTEXT.md bleibt fokussiert auf aktuelle Entscheidungen.
+
+### supabase/migrations/
+
+Enthält versionierte SQL-Migrationen für das Datenbank-Schema.
+Jede Migration liegt als einzelne .sql-Datei vor und ist
+durchnummeriert (0001_initial_schema.sql, 0002_..., etc.).
+Neue Migrationen werden nie in bestehende Dateien geschrieben,
+sondern immer als neue Datei angelegt, damit der Verlauf
+nachvollziehbar bleibt.
 
 ---
 
