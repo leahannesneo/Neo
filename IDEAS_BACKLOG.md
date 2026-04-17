@@ -220,6 +220,42 @@ Bereits erfüllt durch journal_entries.mood.
 
 ---
 
+## Idee #007 – Alternative Login-Methoden (Apple, Google, Phone)
+
+**Datum:** 2026-04-17
+**Status:** Vorgemerkt, Geplant für V1.1 oder später
+**Entstanden in:** Etappe 2 (Authentifizierung)
+
+**Beschreibung:**
+Zusätzlich zum klassischen E-Mail/Passwort-Login sollen später
+weitere Anmelde-Methoden angeboten werden, um den Einstieg in die
+App niedrigschwelliger zu machen:
+- Sign in with Apple (Pflicht-Feature für App Store, sobald andere
+  Social Logins angeboten werden)
+- Sign in with Google (OAuth über Google Cloud Console)
+- Phone-Login (SMS-OTP via Supabase)
+
+**Warum nicht im MVP:**
+- Sign in with Apple setzt einen aktiven Apple Developer Account
+  voraus (laut PROJECT_CONTEXT.md erst kurz vor Store-Einreichung).
+- Google-Login erfordert separates OAuth-Setup in Google Cloud
+  Console mit Redirect-URIs und Deep-Linking – eigenes Arbeitspaket.
+- Phone-Login verursacht im Supabase Free Plan Kosten pro SMS und
+  braucht Provider-Anbindung (z.B. Twilio).
+- E-Mail/Passwort reicht für die ersten Tester (Hannes + Frau).
+
+**Voraussetzung im Schema:**
+Keine Schema-Änderung nötig. Supabase Auth unterstützt alle
+Methoden parallel über denselben auth.users-Eintrag; das bestehende
+profiles-Modell und der Auto-Trigger funktionieren unverändert.
+
+**UI-Anforderung (für spätere Etappe):**
+Login- und Registrierungs-Screen bekommen zusätzliche Buttons
+"Mit Apple anmelden" / "Mit Google anmelden" / "Mit Telefonnummer
+anmelden" oberhalb oder unterhalb des E-Mail/Passwort-Formulars.
+
+---
+
 *Ende der Ideas-Backlog-Datei. Neue Ideen werden chronologisch unten
 angefügt, jeweils mit Datum, Status, Entstehungs-Kontext und klarer
 Beschreibung.*
