@@ -21,6 +21,7 @@ Neo ist eine React-Native-/Expo-App, die Schwangerschaftsbegleitung und Foto-Med
 - Aufträge kommen meistens als kopierter Text aus einem Chat mit Claude (Planer).
 - Vor größeren Änderungen: erst Plan zeigen, dann auf "Go" warten.
 - Bei Unsicherheiten nachfragen, nicht raten.
+- Commit-Nachrichten auf Deutsch; erste Zeile mit Etappen-Bezug (z.B. `Etappe 2 Sitzung B: ...`), darunter Bindestrich-Liste der Änderungen.
 
 ## Code-Konventionen
 
@@ -30,11 +31,15 @@ Neo ist eine React-Native-/Expo-App, die Schwangerschaftsbegleitung und Foto-Med
 - Supabase-Client wird aus `lib/supabase.js` importiert: `import { supabase } from './lib/supabase'`.
 - Umgebungsvariablen kommen aus `.env` und haben den Prefix `EXPO_PUBLIC_`.
 - Keine Secrets im Code. Keine Secrets committen. `.env` ist in `.gitignore`.
+- Supabase-Auth-Fehler (englisch) werden über `lib/authErrors.js` → `translateAuthError()` zu deutschen User-Texten übersetzt. Nie rohe Fehlermeldungen direkt anzeigen.
 
 ## Ordnerstruktur (wachsend)
 
 - `App.js` — Einstiegspunkt
-- `lib/` — Hilfsmodule (z.B. `supabase.js`)
+- `lib/` — Hilfsmodule (z.B. `supabase.js`, `AuthContext.js`, `authErrors.js`)
+- `components/` — wiederverwendbare UI-Elemente (z.B. `PrimaryButton.js`)
+- `screens/` — App-Screens; Auth-Screens liegen unter `screens/auth/`
+- `navigation/` — Navigator-Definitionen (z.B. `RootNavigator.js`)
 - `PROJECT_CONTEXT.md` — Projekt-Verfassung
 - `CLAUDE.md` — diese Datei
 
