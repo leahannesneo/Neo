@@ -4,8 +4,8 @@
 > Sie wird zu Beginn jedes neuen Chats mit Claude reinkopiert und liegt
 > zusätzlich im Projektordner, damit Claude Code sie lesen kann.
 >
-> **Stand:** Etappe 1 (Datenbank-Schema) abgeschlossen — bereit für Etappe 2 (Authentifizierung)
-> **Letztes Update:** 2026-04-17
+> **Stand:** Etappe 2 (Authentifizierung) abgeschlossen — bereit für Etappe 3 (Onboarding-Flow)
+> **Letztes Update:** 2026-04-18
 > **Architekt:** Hannes
 > **Technische Umsetzung:** Claude (Planung) + Claude Code (Ausführung)
 
@@ -80,6 +80,13 @@ durchgängige Begleitung aus einer Hand.
 - System-Seed-Daten eingespielt: ca. 30 Moment-Tags und 18 STIKO-Impfungen
 - SQL-Migration versioniert unter supabase/migrations/0001_initial_schema.sql
 - IDEAS_BACKLOG.md im Projektordner angelegt (sammelt verschobene Ideen, aktuell 6 Einträge)
+- React Navigation (Native Stack) installiert und eingerichtet
+- AsyncStorage als Supabase-Session-Speicher konfiguriert, Session überlebt App-Neustarts
+- AuthContext und RootNavigator umschalten automatisch zwischen AuthStack (SignIn, SignUp) und AppStack (Home) je nach Session-Status
+- Registrierungs-Screen mit E-Mail-Bestätigung via Supabase Auth funktionsfähig
+- Login- und Logout-Flow funktionsfähig, inklusive deutscher Fehlertexte über lib/authErrors.js
+- Fix in Migration 0002: handle_new_user()-Trigger hatte leeren search_path, jetzt explizit auf public gesetzt und alle Tabellen-Referenzen vollqualifiziert
+- CLAUDE.md an die in Etappe 2 etablierten Konventionen angepasst
 
 **Noch offen (kommt später):**
 - Apple Developer Account (erst zur App-Store-Einreichung)
@@ -266,7 +273,7 @@ Etappe 1 beim Anlegen des Schemas konkretisiert.)
 - Erster Test: Leere App auf iPhone via Expo Go
 
 **Etappe 1 – Datenbank-Schema in Supabase ✅ abgeschlossen**
-**Etappe 2 – Authentifizierung** (Register, Login, Logout)
+**Etappe 2 – Authentifizierung** ✅ abgeschlossen
 **Etappe 3 – Onboarding-Flow** (adaptive Karten)
 **Etappe 4 – Kind-Profil & Gesundheitsdaten**
 **Etappe 5 – Schwangerschafts-Modus** mit Wochenansicht
@@ -365,12 +372,12 @@ inhaltlich abgeschlossen ist, macht Claude folgendes
       (online) hochzuladen, damit beide Versionen
       synchron bleiben und neue Chats den aktuellen
       Stand sehen.
-3. Zusätzlich prüft Claude, ob sich in der Etappe eine
-   technische Konvention, eine Arbeitsregel oder die
-   Ordnerstruktur geändert hat. Falls ja, schreibt Claude
-   einen separaten kopierfertigen Auftrag an Claude Code,
-   um CLAUDE.md entsprechend anzupassen. Falls nein,
-   bleibt CLAUDE.md unverändert und wird nicht erwähnt.
+3. Zusätzlich wird CLAUDE.md am Ende jeder Etappe verbindlich
+   geprüft, auch wenn vermutet wird, dass sich nichts geändert
+   hat. Claude schreibt einen kopierfertigen Auftrag an Claude
+   Code, der die Datei inhaltlich gegen die aktuelle Realität
+   abgleicht und ggf. ergänzt. Falls keine Änderung nötig ist,
+   bestätigt Claude Code das explizit in seiner Rückmeldung.
 4. Erst danach schließt Hannes den aktuellen Chat und
    öffnet einen neuen Chat mit dem Übergabe-Prompt.
 
