@@ -390,7 +390,22 @@ inhaltlich abgeschlossen ist, macht Claude folgendes
    Code, der die Datei inhaltlich gegen die aktuelle Realität
    abgleicht und ggf. ergänzt. Falls keine Änderung nötig ist,
    bestätigt Claude Code das explizit in seiner Rückmeldung.
-4. Erst danach schließt Hannes den aktuellen Chat und
+4. Zusätzlich wird am Ende jeder Etappe ein Git-Commit mit Push
+   auf GitHub durchgeführt. Claude schreibt dafür einen kopier-
+   fertigen Auftrag an Claude Code, der folgende Schritte macht:
+   - git status zeigen, damit Hannes und Claude Code ungewollte
+     Dateien (insbesondere .env) erkennen können
+   - git add -A zum Staging
+   - git commit mit einer mehrzeiligen Message nach Schema:
+     erste Zeile "Etappe X abgeschlossen: <Kurztitel>",
+     danach eine Leerzeile, danach eine Bullet-Liste der
+     wichtigsten Änderungen dieser Etappe
+   - git push auf den aktiven Branch
+   - git log --oneline -5 zur Bestätigung
+   Falls git status unerwartete Dateien zeigt (z.B. .env, lokale
+   Build-Artefakte), stoppt Claude Code vor dem Commit und meldet
+   das zurück, statt blind durchzulaufen.
+5. Erst danach schließt Hannes den aktuellen Chat und
    öffnet einen neuen Chat mit dem Übergabe-Prompt.
 
 ### In einem neuen Chat
@@ -411,6 +426,10 @@ Danach geht die Arbeit an der neuen Etappe weiter.
 - Macht den Projektstand jederzeit nachvollziehbar
 - Erlaubt Hannes, sich auf das Testen und Entscheiden zu
   konzentrieren, während der Workflow im Hintergrund läuft
+- Hält lokalen Code-Stand, GitHub-Stand und die Dokumentation
+  (PROJECT_CONTEXT.md, IDEAS_BACKLOG.md, CLAUDE.md) synchron,
+  sodass jederzeit ein Wechsel des Arbeitsgeräts oder ein
+  Rechner-Crash ohne Datenverlust überstanden wird
 
 ---
 
