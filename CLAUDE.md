@@ -32,14 +32,17 @@ Neo ist eine React-Native-/Expo-App, die Schwangerschaftsbegleitung und Foto-Med
 - Umgebungsvariablen kommen aus `.env` und haben den Prefix `EXPO_PUBLIC_`.
 - Keine Secrets im Code. Keine Secrets committen. `.env` ist in `.gitignore`.
 - Supabase-Auth-Fehler (englisch) werden über `lib/authErrors.js` → `translateAuthError()` zu deutschen User-Texten übersetzt. Nie rohe Fehlermeldungen direkt anzeigen.
+- Profil-Daten (inkl. `onboarding_completed_at`) werden über den `useProfile()`-Hook aus `lib/ProfileContext.js` geladen. Gibt `{ profile, loading, error, onboardingCompleted, refresh }` zurück.
+- `RootNavigator` unterscheidet drei Zustände: kein Session → AuthStack; Session + `onboarding_completed_at IS NULL` → OnboardingStack; Session + Onboarding abgeschlossen → AppStack.
+- App-weite States (Profil, Onboarding-Daten) werden als Context+Provider+Hook-Muster umgesetzt (`createContext` + Provider-Komponente + `useX()`-Hook). Keine isolierten `useState`-Hooks für Daten, die zwischen mehreren Screens geteilt werden.
 
 ## Ordnerstruktur (wachsend)
 
 - `App.js` — Einstiegspunkt
-- `lib/` — Hilfsmodule (z.B. `supabase.js`, `AuthContext.js`, `authErrors.js`)
-- `components/` — wiederverwendbare UI-Elemente (z.B. `PrimaryButton.js`)
-- `screens/` — App-Screens; Auth-Screens liegen unter `screens/auth/`
-- `navigation/` — Navigator-Definitionen (z.B. `RootNavigator.js`)
+- `lib/` — Hilfsmodule (z.B. `supabase.js`, `AuthContext.js`, `ProfileContext.js`, `OnboardingContext.js`, `authErrors.js`, `finishOnboarding.js`)
+- `components/` — wiederverwendbare UI-Elemente (z.B. `PrimaryButton.js`, `OnboardingCard.js`)
+- `screens/` — App-Screens; Auth-Screens unter `screens/auth/`, Onboarding-Screens unter `screens/onboarding/`
+- `navigation/` — Navigator-Definitionen (z.B. `RootNavigator.js`, `OnboardingStack.js`)
 - `PROJECT_CONTEXT.md` — Projekt-Verfassung
 - `CLAUDE.md` — diese Datei
 

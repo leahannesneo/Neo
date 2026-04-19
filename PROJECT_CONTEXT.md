@@ -4,8 +4,8 @@
 > Sie wird zu Beginn jedes neuen Chats mit Claude reinkopiert und liegt
 > zusätzlich im Projektordner, damit Claude Code sie lesen kann.
 >
-> **Stand:** Etappe 2 (Authentifizierung) abgeschlossen — bereit für Etappe 3 (Onboarding-Flow)
-> **Letztes Update:** 2026-04-18
+> **Stand:** Etappe 3 (Onboarding-Flow) abgeschlossen — bereit für Etappe 4 (Kind-Profil & Gesundheitsdaten)
+> **Letztes Update:** 2026-04-19
 > **Architekt:** Hannes
 > **Technische Umsetzung:** Claude (Planung) + Claude Code (Ausführung)
 
@@ -87,6 +87,16 @@ durchgängige Begleitung aus einer Hand.
 - Login- und Logout-Flow funktionsfähig, inklusive deutscher Fehlertexte über lib/authErrors.js
 - Fix in Migration 0002: handle_new_user()-Trigger hatte leeren search_path, jetzt explizit auf public gesetzt und alle Tabellen-Referenzen vollqualifiziert
 - CLAUDE.md an die in Etappe 2 etablierten Konventionen angepasst
+- Migration 0003 angelegt: profiles.onboarding_completed_at (timestamptz, nullable) als Marker für abgeschlossenes Onboarding
+- Migration 0004 angelegt: ergänzt die im ursprünglichen Schema fehlende UPDATE-Policy auf family_users (family_users_update)
+- ProfileContext eingeführt (./lib/ProfileContext.js) — ersetzt den früheren isolierten useProfile-Hook, teilt Profil-State app-weit über einen Provider
+- OnboardingContext angelegt (./lib/OnboardingContext.js) mit data-Objekt, updateData/resetData/addEntry/removeEntry/updateEntry
+- Wiederverwendbare OnboardingCard-Komponente angelegt (./components/OnboardingCard.js) mit Fortschrittsanzeige, Titel/Subtitle, Weiter- und Zurück-Button
+- RootNavigator umgebaut auf drei Zustände: AuthStack (keine Session), OnboardingStack (Session ohne onboarding_completed_at), AppStack (Session mit onboarding_completed_at)
+- OnboardingStack mit 10 Screens implementiert: Welcome, Gender, Name, Partnership, Situation, EntriesOverview, EntryPregnancy, EntryChild, Role, Theme, PartnerInvite (optional), Finish
+- Adaptive Kind/Schwangerschafts-Schleife im Onboarding: User kann beliebig viele Schwangerschaften und Kinder hinzufügen (paralleler Modus), Overview-Screen mit Entfernen-Möglichkeit
+- finishOnboarding-Helper (./lib/finishOnboarding.js) schreibt am Ende des Flows alle gesammelten Daten in Supabase: family_users.role Update, INSERT in children (pro Eintrag), INSERT in pregnancies (nur bei Schwangerschaften), zuletzt profiles-Update inkl. onboarding_completed_at
+- HomeScreen erweitert um personalisierte Begrüßung mit display_name aus dem Profil
 
 **Noch offen (kommt später):**
 - Apple Developer Account (erst zur App-Store-Einreichung)
@@ -274,7 +284,7 @@ Etappe 1 beim Anlegen des Schemas konkretisiert.)
 
 **Etappe 1 – Datenbank-Schema in Supabase ✅ abgeschlossen**
 **Etappe 2 – Authentifizierung** ✅ abgeschlossen
-**Etappe 3 – Onboarding-Flow** (adaptive Karten)
+**Etappe 3 – Onboarding-Flow ✅ abgeschlossen**
 **Etappe 4 – Kind-Profil & Gesundheitsdaten**
 **Etappe 5 – Schwangerschafts-Modus** mit Wochenansicht
 **Etappe 6 – Baby-Modus** mit Wochen-/Monatsansicht
@@ -323,6 +333,8 @@ Wenn ein neuer Chat mit dieser Datei gestartet wird, soll Claude:
 - Impressum/Datenschutz-Texte (vor Store-Einreichung nötig)
 - Content-Erstellung: Wer schreibt die Wochentexte final?
   (Claude entwirft, Hannes + Frau redigieren)
+- Feinschliff des Onboarding-Flows (sprachliche Überarbeitung, Feinheiten in Eingabefeldern wie Datumspicker) — geplant für Etappe 13
+- Rollenbasierte Formulierungen der Situations-Karte (Lösung C aus Etappe 3: Rolle vor Situation) bei Bedarf später einfügen, aktuell reicht die neutrale Formulierung
 
 ---
 

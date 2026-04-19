@@ -1,9 +1,11 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../lib/AuthContext';
+import { useProfile } from '../lib/ProfileContext';
 import SignInScreen from '../screens/auth/SignInScreen';
 import SignUpScreen from '../screens/auth/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
+import OnboardingStack from './OnboardingStack';
 
 const AuthStack = createNativeStackNavigator();
 const AppStack = createNativeStackNavigator();
@@ -26,9 +28,10 @@ function AppNavigator() {
 }
 
 export default function RootNavigator() {
-  const { session, loading } = useAuth();
+  const { session, loading: authLoading } = useAuth();
+  const { onboardingCompleted, loading: profileLoading } = useProfile();
 
-  if (loading) {
+  if (authLoading || (session && profileLoading)) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" />
@@ -37,7 +40,15 @@ export default function RootNavigator() {
     );
   }
 
-  return session ? <AppNavigator /> : <AuthNavigator />;
+  if (!session) {
+    return <AuthNavigator />;
+  }
+
+  if (!onboardingCompleted) {
+    return <OnboardingStack />;
+  }
+
+  return <AppNavigator />;
 }
 
 const styles = StyleSheet.create({

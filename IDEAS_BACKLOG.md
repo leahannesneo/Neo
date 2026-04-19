@@ -256,6 +256,66 @@ anmelden" oberhalb oder unterhalb des E-Mail/Passwort-Formulars.
 
 ---
 
+## Idee #008 – Claude Design für Mockups, Themes und Website
+
+**Datum:** 2026-04-19
+**Status:** Vorgemerkt, erstmals zu nutzen in Etappe 11 (Themes)
+                    und zur Website-Phase nach MVP
+**Entstanden in:** Ende Etappe 3 (Onboarding-Flow), auf Anregung
+                    von Hannes
+
+**Beschreibung:**
+Claude Design (Research Preview, gelauncht April 2026) ist
+Anthropics neues Tool zur Generierung von Design-Systemen,
+Website-Prototypen, interaktiven Mockups und Präsentationen per
+Dialog. Verfügbar für Pro/Max/Team/Enterprise-Plans.
+
+Fähigkeiten, die für Neo relevant sein können:
+- Design-Systeme aus Code oder Designfiles einlesen und auf neue
+  Projekte anwenden (Farben, Typografie, Komponenten)
+- Mockups und Prototypen aus Text-Prompts
+- Export nach Canva, Figma, oder direkt zu Claude Code
+- Web-Capture-Tool für Referenz-Elemente
+
+Konkrete Einsatzstellen für Neo:
+
+1. Vor Etappe 11 (Themes & Settings):
+   Die zwei MVP-Themes ("ruhig & stilvoll" vs. "bunt & verspielt")
+   visuell in Claude Design ausprobieren, finale Farbwerte
+   festlegen, bevor sie im Code hinterlegt werden. Spart uns das
+   mühsame "probier mal ein anderes Blau"-Hin-und-Her.
+
+2. App-Icon und Splash Screen:
+   Laut PROJECT_CONTEXT.md Abschnitt 9 noch offen. Claude Design
+   kann hier mehrere Varianten generieren, zur Auswahl.
+
+3. Screens im Voraus visualisieren (optional):
+   Bevor Etappe 5 (Schwangerschafts-Modus) oder Etappe 8 (Kamera)
+   gebaut werden, kann Claude Design erste Mockups erzeugen, um
+   UI-Entscheidungen früher zu treffen.
+
+4. Website-Phase nach MVP:
+   Claude Design als Hauptwerkzeug für Landing Page, Marketing-
+   Seiten, Blog, ggf. Web-Dashboard.
+
+**Warum nicht früher:**
+- Claude Design generiert primär Web-Code (HTML/CSS/React-Web) —
+  Neos App ist React Native + Expo. Der Output lässt sich nicht
+  direkt als Code übernehmen, dient aber gut als visuelle Referenz.
+- Der aktuelle Workflow (Claude-Chat plant, Claude-Code baut,
+  iPhone testet via Expo Go) läuft effizient für funktionale
+  Feature-Etappen. Zusätzliche visuelle Schleifen würden die
+  Durchlaufzeit derzeit eher verlängern.
+- Claude Design steckt noch in der Research Preview — Feature-Set
+  und Stabilität können sich in den nächsten Monaten ändern.
+
+**Voraussetzung:**
+Hannes nutzt bereits einen Claude-Plan mit Zugriff auf Claude
+Design (Pro/Max/Team). Keine technische Vorbereitung am Projekt
+nötig, bis wir das Tool tatsächlich einsetzen.
+
+---
+
 *Ende der Ideas-Backlog-Datei. Neue Ideen werden chronologisch unten
 angefügt, jeweils mit Datum, Status, Entstehungs-Kontext und klarer
 Beschreibung.*
